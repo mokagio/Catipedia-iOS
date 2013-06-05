@@ -43,7 +43,11 @@
 - (void)loadTakePictureController
 {
     UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else {
+        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
     cameraUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeImage, nil];
     cameraUI.allowsEditing = NO;
     cameraUI.delegate = nil;
