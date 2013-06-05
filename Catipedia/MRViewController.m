@@ -23,6 +23,7 @@
     [super viewDidLoad];
     
     self.title = @"Catipedia";
+    self.view.backgroundColor = [UIColor lightGrayColor];
     [self addTakePictureButton];
 }
 
