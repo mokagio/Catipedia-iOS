@@ -9,6 +9,7 @@
 #import "MRViewController.h"
 
 #import "MRTakePictureControllerViewController.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface MRViewController ()
 @property (nonatomic, strong) UIButton *takePictureButton;
@@ -41,8 +42,13 @@
 
 - (void)loadTakePictureController
 {
-    MRTakePictureControllerViewController *viewController = [[MRTakePictureControllerViewController alloc] init];
-    [self presentViewController:viewController animated:YES completion:nil];
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    cameraUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeImage, nil];
+    cameraUI.allowsEditing = NO;
+    cameraUI.delegate = nil;
+    
+    [self presentViewController:cameraUI animated:YES completion:nil];
 }
 
 @end
