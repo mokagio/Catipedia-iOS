@@ -8,8 +8,12 @@
 
 #import "MRViewController.h"
 
-@interface MRViewController ()
+#import "MRTakePictureControllerViewController.h"
 
+@interface MRViewController ()
+@property (nonatomic, strong) UIButton *takePictureButton;
+- (void)addTakePictureButton;
+- (void)loadTakePictureController;
 @end
 
 @implementation MRViewController
@@ -19,12 +23,25 @@
     [super viewDidLoad];
     
     self.title = @"Catipedia";
+    [self addTakePictureButton];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)addTakePictureButton
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.takePictureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.takePictureButton.frame = CGRectMake(0, 0, 160, 80);
+    self.takePictureButton.center = self.view.center;
+    [self.takePictureButton setTitle:@"Take Picture" forState:UIControlStateNormal];
+    [self.takePictureButton addTarget:self
+                               action:@selector(loadTakePictureController)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.takePictureButton];
+}
+
+- (void)loadTakePictureController
+{
+    MRTakePictureControllerViewController *viewController = [[MRTakePictureControllerViewController alloc] init];
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

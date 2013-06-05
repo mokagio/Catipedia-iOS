@@ -17,12 +17,12 @@
 		3FD2D59D175F32B2005A962D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2D59C175F32B2005A962D /* Default@2x.png */; };
 		3FD2D59F175F32B2005A962D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2D59E175F32B2005A962D /* Default-568h@2x.png */; };
 		3FD2D5A2175F32B2005A962D /* MRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2D5A1175F32B2005A962D /* MRViewController.m */; };
-		3FD2D5A5175F32B2005A962D /* MRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2D5A3175F32B2005A962D /* MRViewController.xib */; };
 		3FD2D5AD175F32B2005A962D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D5AC175F32B2005A962D /* SenTestingKit.framework */; };
 		3FD2D5AE175F32B2005A962D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D588175F32B2005A962D /* UIKit.framework */; };
 		3FD2D5AF175F32B2005A962D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D58A175F32B2005A962D /* Foundation.framework */; };
 		3FD2D5B7175F32B2005A962D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2D5B5175F32B2005A962D /* InfoPlist.strings */; };
 		3FD2D5BA175F32B2005A962D /* CatipediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2D5B9175F32B2005A962D /* CatipediaTests.m */; };
+		3FD2D5C5175F3B50005A962D /* MRTakePictureControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2D5C4175F3B50005A962D /* MRTakePictureControllerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,13 +51,14 @@
 		3FD2D59E175F32B2005A962D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3FD2D5A0175F32B2005A962D /* MRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRViewController.h; sourceTree = "<group>"; };
 		3FD2D5A1175F32B2005A962D /* MRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRViewController.m; sourceTree = "<group>"; };
-		3FD2D5A4175F32B2005A962D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MRViewController.xib; sourceTree = "<group>"; };
 		3FD2D5AB175F32B2005A962D /* CatipediaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatipediaTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD2D5AC175F32B2005A962D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3FD2D5B4175F32B2005A962D /* CatipediaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CatipediaTests-Info.plist"; sourceTree = "<group>"; };
 		3FD2D5B6175F32B2005A962D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3FD2D5B8175F32B2005A962D /* CatipediaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatipediaTests.h; sourceTree = "<group>"; };
 		3FD2D5B9175F32B2005A962D /* CatipediaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatipediaTests.m; sourceTree = "<group>"; };
+		3FD2D5C3175F3B50005A962D /* MRTakePictureControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTakePictureControllerViewController.h; sourceTree = "<group>"; };
+		3FD2D5C4175F3B50005A962D /* MRTakePictureControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTakePictureControllerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +122,8 @@
 				3FD2D598175F32B2005A962D /* MRAppDelegate.m */,
 				3FD2D5A0175F32B2005A962D /* MRViewController.h */,
 				3FD2D5A1175F32B2005A962D /* MRViewController.m */,
-				3FD2D5A3175F32B2005A962D /* MRViewController.xib */,
+				3FD2D5C3175F3B50005A962D /* MRTakePictureControllerViewController.h */,
+				3FD2D5C4175F3B50005A962D /* MRTakePictureControllerViewController.m */,
 				3FD2D58F175F32B2005A962D /* Supporting Files */,
 			);
 			path = Catipedia;
@@ -236,7 +238,6 @@
 				3FD2D59B175F32B2005A962D /* Default.png in Resources */,
 				3FD2D59D175F32B2005A962D /* Default@2x.png in Resources */,
 				3FD2D59F175F32B2005A962D /* Default-568h@2x.png in Resources */,
-				3FD2D5A5175F32B2005A962D /* MRViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +275,7 @@
 				3FD2D595175F32B2005A962D /* main.m in Sources */,
 				3FD2D599175F32B2005A962D /* MRAppDelegate.m in Sources */,
 				3FD2D5A2175F32B2005A962D /* MRViewController.m in Sources */,
+				3FD2D5C5175F3B50005A962D /* MRTakePictureControllerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,14 +304,6 @@
 				3FD2D592175F32B2005A962D /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		3FD2D5A3175F32B2005A962D /* MRViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3FD2D5A4175F32B2005A962D /* en */,
-			);
-			name = MRViewController.xib;
 			sourceTree = "<group>";
 		};
 		3FD2D5B5175F32B2005A962D /* InfoPlist.strings */ = {
