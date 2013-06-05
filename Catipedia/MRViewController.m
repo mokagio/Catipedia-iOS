@@ -8,7 +8,6 @@
 
 #import "MRViewController.h"
 
-#import "MRTakePictureControllerViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 
 @interface MRViewController ()
