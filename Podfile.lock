@@ -1,10 +1,17 @@
 PODS:
+  - AFAmazonS3Client (0.2.0):
+    - AFNetworking (~> 1.0)
+  - AFNetworking (1.1.0)
   - MBProgressHUD (0.6)
 
 DEPENDENCIES:
+  - AFAmazonS3Client (~> 0.2.0)
+  - AFNetworking (~> 1.1.0)
   - MBProgressHUD (~> 0.6)
 
 SPEC CHECKSUMS:
+  AFAmazonS3Client: 2df1b6ccd3d69f21583ac745cebfe894959ae184
+  AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
 
 COCOAPODS: 0.20.2
