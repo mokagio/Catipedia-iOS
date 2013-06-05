@@ -8,12 +8,18 @@
 
 #import "MRViewController.h"
 
+#import <MBProgressHUD/MBProgressHUD.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+
+static const CGFloat kToastMessageInterval = 1.0;
 
 @interface MRViewController ()
 @property (nonatomic, strong) UIButton *takePictureButton;
+@property (nonatomic, strong) MBProgressHUD *toastMessage;
 - (void)addTakePictureButton;
 - (void)loadTakePictureController;
+- (void)pictureTakenSuccessfulyFeedback;
+- (void)removeToastMessage;
 @end
 
 @interface MRViewController (CameraDelegate) <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
@@ -57,6 +63,21 @@
     [self presentViewController:cameraUI animated:YES completion:nil];
 }
 
+- (void)pictureTakenSuccessfulyFeedback
+{
+    self.toastMessage = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.toastMessage.mode = MBProgressHUDModeText;
+    self.toastMessage.labelText = @"Picture Saved";
+    self.toastMessage.yOffset = 100;
+
+    [self performSelector:@selector(removeToastMessage) withObject:nil afterDelay:kToastMessageInterval];
+}
+
+- (void)removeToastMessage
+{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+}
+
 @end
 
 @implementation MRViewController (CameraDelegate)
@@ -65,15 +86,18 @@
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    UIImage *imageToSave;
-    
+    UIImage *imageToSave = nil;
+    BOOL success = NO;
     if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
         imageToSave = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
         // TODO save in custom album
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil , nil);
+        success = YES;
     }
     
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        if (success) [self pictureTakenSuccessfulyFeedback];
+    }];
 }
 
 @end
