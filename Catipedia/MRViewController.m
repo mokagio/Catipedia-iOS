@@ -8,8 +8,15 @@
 
 #import "MRViewController.h"
 
+#import "MRCredentialManager.h"
+#import <AFNetworking/AFNetworking.h>
+#import <AFAmazonS3Client/AFAmazonS3Client.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+
+static NSString *kServerBaseURL = @"http://catipedia-server.herokuapp.com/";
+static NSString *kBucket = @"catipedia.memrise.com";
 
 static const CGFloat kToastMessageInterval = 1.0;
 
@@ -18,7 +25,7 @@ static const CGFloat kToastMessageInterval = 1.0;
 @property (nonatomic, strong) MBProgressHUD *toastMessage;
 - (void)addTakePictureButton;
 - (void)loadTakePictureController;
-- (void)pictureTakenSuccessfulyFeedback;
+- (void)uploadPictureFromPath:(NSString *)picturePath;
 - (void)removeToastMessage;
 @end
 
@@ -63,13 +70,36 @@ static const CGFloat kToastMessageInterval = 1.0;
     [self presentViewController:cameraUI animated:YES completion:nil];
 }
 
-- (void)pictureTakenSuccessfulyFeedback
+- (void)uploadPictureFromPath:(NSString *)picturePath
+{
+    AFAmazonS3Client *httpClient = [[AFAmazonS3Client alloc] initWithAccessKeyID:[MRCredentialManager S3KeyID]
+                                                                          secret:[MRCredentialManager S3Secret]];
+    httpClient.bucket = kBucket;
+    
+    NSString *destinationPath = [NSString stringWithFormat:@"test/"];
+    [httpClient postObjectWithFile:picturePath
+                   destinationPath:destinationPath
+                        parameters:nil
+                          progress:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                              NSLog(@"%f%% Uploaded", (totalBytesWritten / (totalBytesExpectedToWrite * 1.0f) * 100));
+                          } success:^(id responseObject) {
+                              [self dismissViewControllerAnimated:YES completion:^{
+                                  NSLog(@"Upload Complete");
+                              }];
+                          } failure:^(NSError *error) {
+                              [self dismissViewControllerAnimated:YES completion:^{
+                                  NSLog(@"Error: %@", error);
+                              }];
+                          }];
+}
+
+- (void)showFeedbackToast
 {
     self.toastMessage = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.toastMessage.mode = MBProgressHUDModeText;
     self.toastMessage.labelText = @"Picture Saved";
     self.toastMessage.yOffset = 100;
-
+    
     [self performSelector:@selector(removeToastMessage) withObject:nil afterDelay:kToastMessageInterval];
 }
 
@@ -86,18 +116,46 @@ static const CGFloat kToastMessageInterval = 1.0;
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    UIImage *imageToSave = nil;
-    BOOL success = NO;
     if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-        imageToSave = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-        // TODO save in custom album
-        UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil , nil);
-        success = YES;
+        UIImage *imageToSave = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        // Save image to library
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library writeImageToSavedPhotosAlbum:[imageToSave CGImage]
+                                  orientation:(ALAssetOrientation)[imageToSave imageOrientation]
+                              completionBlock:^(NSURL *assetURL, NSError *error){
+                                  if (error) {
+                                      NSLog(@"error");
+                                      [picker dismissViewControllerAnimated:YES completion:nil];
+                                  } else {
+                                      // Save image to temp file beacuse damned iOS doesn't allow us to access the Camera Roll
+                                      // (?)
+                                      UIImage *resizedImage = [imageToSave copy];
+                                      CGFloat scaleFactor = 0.25;
+                                      CGFloat resizedHeight = resizedImage.size.height * scaleFactor;
+                                      CGFloat resizedWidth = resizedImage.size.width * scaleFactor;
+                                      CGSize resizedSize = CGSizeMake(resizedWidth, resizedHeight);
+                                      UIGraphicsBeginImageContextWithOptions(resizedSize, NO, 0.0f);
+                                      [resizedImage drawInRect:CGRectMake(0, 0, resizedSize.width, resizedSize.height)];
+                                      resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+                                      UIGraphicsEndImageContext();
+                                      
+                                      NSData *data = UIImageJPEGRepresentation(resizedImage, 0.5);
+                                      NSString *fileName = [NSString stringWithFormat:@"temp-%f.jpg", [[NSDate date] timeIntervalSince1970]];
+                                      NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                                      NSString *documentsDirectory = [paths objectAtIndex:0];
+                                      NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
+                                      BOOL success = [data writeToFile:path atomically:YES];
+                                      if (success) {
+                                          [self uploadPictureFromPath:path];
+                                      } else {
+                                          [picker dismissViewControllerAnimated:YES completion:^{
+                                              NSLog(@"There was an error");
+                                          }];
+                                      }
+                                  }
+                              }];
     }
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        if (success) [self pictureTakenSuccessfulyFeedback];
-    }];
 }
 
 @end

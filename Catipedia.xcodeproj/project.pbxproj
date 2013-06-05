@@ -27,6 +27,7 @@
 		3FE0ACF5175F855F004E7C0F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE0ACF4175F855F004E7C0F /* SystemConfiguration.framework */; };
 		3FE0ACF8175F9285004E7C0F /* MRCredentialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE0ACF7175F9285004E7C0F /* MRCredentialManager.m */; };
 		3FE0ACFA175F93AE004E7C0F /* secret.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FE0ACF9175F93AE004E7C0F /* secret.json */; };
+		3FE0ACFC175F96CF004E7C0F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE0ACFB175F96CF004E7C0F /* AssetsLibrary.framework */; };
 		5A6F073CB0094D51B9868A32 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4E09A6F3D8E4F79BE53F41E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		3FE0ACF6175F9285004E7C0F /* MRCredentialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCredentialManager.h; sourceTree = "<group>"; };
 		3FE0ACF7175F9285004E7C0F /* MRCredentialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCredentialManager.m; sourceTree = "<group>"; };
 		3FE0ACF9175F93AE004E7C0F /* secret.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = secret.json; sourceTree = "<group>"; };
+		3FE0ACFB175F96CF004E7C0F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		99DAF15D2AC34F38B085EEBC /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		B4E09A6F3D8E4F79BE53F41E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FE0ACFC175F96CF004E7C0F /* AssetsLibrary.framework in Frameworks */,
 				3FE0ACF5175F855F004E7C0F /* SystemConfiguration.framework in Frameworks */,
 				3FD2D5C9175F3E6D005A962D /* MobileCoreServices.framework in Frameworks */,
 				3FD2D5C7175F3E2E005A962D /* AVFoundation.framework in Frameworks */,
@@ -123,6 +126,7 @@
 		3FD2D587175F32B2005A962D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3FE0ACFB175F96CF004E7C0F /* AssetsLibrary.framework */,
 				3FE0ACF4175F855F004E7C0F /* SystemConfiguration.framework */,
 				3FD2D5C8175F3E6D005A962D /* MobileCoreServices.framework */,
 				3FD2D5C6175F3E2E005A962D /* AVFoundation.framework */,

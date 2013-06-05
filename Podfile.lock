@@ -5,9 +5,13 @@ PODS:
   - MBProgressHUD (0.6)
 
 DEPENDENCIES:
-  - AFAmazonS3Client (~> 0.2.0)
+  - AFAmazonS3Client (from `https://github.com/AFNetworking/AFAmazonS3Client`)
   - AFNetworking (~> 1.1.0)
   - MBProgressHUD (~> 0.6)
+
+EXTERNAL SOURCES:
+  AFAmazonS3Client:
+    :git: https://github.com/AFNetworking/AFAmazonS3Client
 
 SPEC CHECKSUMS:
   AFAmazonS3Client: 2df1b6ccd3d69f21583ac745cebfe894959ae184
