@@ -22,7 +22,6 @@
 		3FD2D5AF175F32B2005A962D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D58A175F32B2005A962D /* Foundation.framework */; };
 		3FD2D5B7175F32B2005A962D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2D5B5175F32B2005A962D /* InfoPlist.strings */; };
 		3FD2D5BA175F32B2005A962D /* CatipediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2D5B9175F32B2005A962D /* CatipediaTests.m */; };
-		3FD2D5C5175F3B50005A962D /* MRTakePictureControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2D5C4175F3B50005A962D /* MRTakePictureControllerViewController.m */; };
 		3FD2D5C7175F3E2E005A962D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D5C6175F3E2E005A962D /* AVFoundation.framework */; };
 		3FD2D5C9175F3E6D005A962D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D5C8175F3E6D005A962D /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
@@ -59,8 +58,6 @@
 		3FD2D5B6175F32B2005A962D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3FD2D5B8175F32B2005A962D /* CatipediaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatipediaTests.h; sourceTree = "<group>"; };
 		3FD2D5B9175F32B2005A962D /* CatipediaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatipediaTests.m; sourceTree = "<group>"; };
-		3FD2D5C3175F3B50005A962D /* MRTakePictureControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTakePictureControllerViewController.h; sourceTree = "<group>"; };
-		3FD2D5C4175F3B50005A962D /* MRTakePictureControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTakePictureControllerViewController.m; sourceTree = "<group>"; };
 		3FD2D5C6175F3E2E005A962D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3FD2D5C8175F3E6D005A962D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -130,8 +127,6 @@
 				3FD2D598175F32B2005A962D /* MRAppDelegate.m */,
 				3FD2D5A0175F32B2005A962D /* MRViewController.h */,
 				3FD2D5A1175F32B2005A962D /* MRViewController.m */,
-				3FD2D5C3175F3B50005A962D /* MRTakePictureControllerViewController.h */,
-				3FD2D5C4175F3B50005A962D /* MRTakePictureControllerViewController.m */,
 				3FD2D58F175F32B2005A962D /* Supporting Files */,
 			);
 			path = Catipedia;
@@ -283,7 +278,6 @@
 				3FD2D595175F32B2005A962D /* main.m in Sources */,
 				3FD2D599175F32B2005A962D /* MRAppDelegate.m in Sources */,
 				3FD2D5A2175F32B2005A962D /* MRViewController.m in Sources */,
-				3FD2D5C5175F3B50005A962D /* MRTakePictureControllerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +450,7 @@
 				3FD2D5BF175F32B2005A962D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FD2D5C0175F32B2005A962D /* Build configuration list for PBXNativeTarget "CatipediaTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +459,7 @@
 				3FD2D5C2175F32B2005A962D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
