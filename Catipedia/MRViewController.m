@@ -16,6 +16,9 @@
 - (void)loadTakePictureController;
 @end
 
+@interface MRViewController (CameraDelegate) <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@end
+
 @implementation MRViewController
 
 - (void)viewDidLoad
@@ -49,9 +52,28 @@
     }
     cameraUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeImage, nil];
     cameraUI.allowsEditing = NO;
-    cameraUI.delegate = nil;
+    cameraUI.delegate = self;
     
     [self presentViewController:cameraUI animated:YES completion:nil];
+}
+
+@end
+
+@implementation MRViewController (CameraDelegate)
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    UIImage *imageToSave;
+    
+    if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+        imageToSave = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+        // TODO save in custom album
+        UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil , nil);
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
