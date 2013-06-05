@@ -14,7 +14,7 @@ static NSString *kSecretKey = @"s3Secret";
 
 @implementation MRCredentialManager
 
-+ (NSString *)S3APIKey
++ (NSString *)S3KeyID
 {
     NSDictionary *dict = [MRCredentialManager dictionaryFromJSONNamed:kConfigJSONFileName];
     return [dict valueForKey:kKeyKey];

@@ -10,7 +10,7 @@
 
 @interface MRCredentialManager : NSObject
 
-+ (NSString *)S3APIKey;
++ (NSString *)S3KeyID;
 + (NSString *)S3Secret;
 
 @end
