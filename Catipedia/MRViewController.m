@@ -81,7 +81,7 @@ static const CGFloat kToastMessageInterval = 1.0;
                                                                           secret:[MRCredentialManager S3Secret]];
     httpClient.bucket = kBucket;
     
-    NSString *destinationPath = [NSString stringWithFormat:@"test/"];
+    NSString *destinationPath = [NSString stringWithFormat:@"/"];
     [httpClient postObjectWithFile:picturePath
                    destinationPath:destinationPath
                         parameters:nil
