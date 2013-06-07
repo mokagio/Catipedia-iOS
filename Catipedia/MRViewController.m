@@ -16,13 +16,16 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 static NSString *kServerBaseURL = @"http://catipedia-server.herokuapp.com/";
+static NSString *kCatsListURL = @"";
 static NSString *kBucket = @"catipedia.memrise.com";
 
 static const CGFloat kToastMessageInterval = 1.0;
 
-@interface MRViewController ()
+@interface MRViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UIButton *takePictureButton;
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) MBProgressHUD *toastMessage;
+@property (nonatomic, strong) NSMutableArray *cats;
 - (void)addTakePictureButton;
 - (void)loadTakePictureController;
 - (void)uploadPictureFromPath:(NSString *)picturePath;
@@ -30,12 +33,21 @@ static const CGFloat kToastMessageInterval = 1.0;
 - (void)showSuccessToast;
 - (void)showFailToast;
 - (void)removeToastMessage;
-@end
 
-@interface MRViewController (CameraDelegate) <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+- (void)addTable;
+- (void)fetchCats;
 @end
 
 @implementation MRViewController
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.cats = [NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -43,7 +55,14 @@ static const CGFloat kToastMessageInterval = 1.0;
     
     self.title = @"Catipedia";
     self.view.backgroundColor = [UIColor lightGrayColor];
+    [self addTable];
     [self addTakePictureButton];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self fetchCats];
 }
 
 - (void)addTakePictureButton
@@ -51,13 +70,52 @@ static const CGFloat kToastMessageInterval = 1.0;
     self.takePictureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.takePictureButton.frame = CGRectMake(0, 0, 160, 80);
     CGPoint center = self.view.center;
-    center.y += 160;
+    center.y = self.view.frame.size.height - self.takePictureButton.frame.size.height / 2 - 140;
     self.takePictureButton.center = center;
     [self.takePictureButton setTitle:@"Take Picture" forState:UIControlStateNormal];
     [self.takePictureButton addTarget:self
                                action:@selector(loadTakePictureController)
                      forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.takePictureButton];
+}
+
+- (void)addTable
+{
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+}
+
+- (void)fetchCats
+{
+    MBProgressHUD *loadingHUD = [MBProgressHUD showHUDAddedTo:self.view animated:NO];
+    loadingHUD.labelText = @"looking for cats";
+    loadingHUD.mode = MBProgressHUDModeIndeterminate;
+    self.takePictureButton.hidden = YES;
+    
+    NSURL *url = [NSURL URLWithString:kCatsListURL];
+    NSURLRequest *versionRequest = [NSURLRequest requestWithURL:url];
+    AFJSONRequestOperation *localVersionOperation = \
+    [AFJSONRequestOperation JSONRequestOperationWithRequest:versionRequest
+                                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                        NSArray *cats = [(NSDictionary *)JSON valueForKey:@"results"];
+                                                        
+                                                        NSMutableArray *temp = [NSMutableArray array];
+                                                        for (NSDictionary *cat in cats) {
+                                                            [temp addObject:cat];
+                                                        }
+                                                        self.cats = temp;
+                                                        [self.tableView reloadData];
+                                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                        self.takePictureButton.hidden = NO;
+                                                        
+                                                    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                        NSLog(@"JSON failure - %@", error);
+                                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                        self.takePictureButton.hidden = NO;
+                                                    }];
+    [localVersionOperation start];
 }
 
 - (void)loadTakePictureController
@@ -136,9 +194,7 @@ static const CGFloat kToastMessageInterval = 1.0;
     return resizedImage;
 }
 
-@end
-
-@implementation MRViewController (CameraDelegate)
+#pragma mark - UIImagePickerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -183,6 +239,35 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                   }
                               }];
     }
+}
+
+#pragma mark - UITableViewControllerDelegate
+
+
+#pragma mark - UITableViewController DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.cats count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *identifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+    }
+    
+    cell.textLabel.text = @"Cat Word Here";
+    
+    return cell;
 }
 
 @end
