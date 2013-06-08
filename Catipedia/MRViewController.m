@@ -16,6 +16,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 //static NSString *kBaseURL = @"http://catipedia-server.herokuapp.com";
+static NSString *kStorageBaseURL = @"https://s3.amazonaws.com/catipedia.memrise.com/";
 static NSString *kBaseURL = @"http://localhost:5000";
 //static NSString *kCatsListURL = @"http://catipedia-server.herokuapp.com/cats/";
 static NSString *kCatsListURL = @"http://localhost:5000/cats/";
@@ -148,15 +149,17 @@ static const CGFloat kToastMessageInterval = 1.0;
                                                                           secret:[MRCredentialManager S3Secret]];
     httpClient.bucket = kBucket;
     
-    NSString *destinationPath = [NSString stringWithFormat:@"/"];
+    NSString *destinationPath = @"/"; // only one that works so far...
+//    destinationPath = @"https://s3.amazonaws.com/catipedia.memrise.com/public/";
+//    destinationPath = @"public/";
     [httpClient postObjectWithFile:picturePath
                    destinationPath:destinationPath
-                        parameters:@{@"Content-Type":@"image/jpeg"}
+                        parameters:@{@"Content-Type":@"image/jpeg", @"acl":@"public-read"}
                           progress:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
                               NSLog(@"%f%% Uploaded", (totalBytesWritten / (totalBytesExpectedToWrite * 1.0f) * 100));
                           } success:^(id responseObject) {
                               
-                              NSString *imageLink = [picturePath lastPathComponent];
+                              NSString *imageLink = [NSString stringWithFormat:@"%@%@", kStorageBaseURL, [picturePath lastPathComponent]];
                               NSDictionary *params = @{@"name":@"dummy-name",@"link":imageLink};
                               
                               AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURL]];
