@@ -10,6 +10,7 @@ typedef void (^Callback)();
 
 #import "MRNewCatViewController.h"
 
+#import "CatipediaConstants.h"
 #import "MRCredentialManager.h"
 
 #import <AFAmazonS3Client/AFAmazonS3Client.h>
@@ -17,15 +18,6 @@ typedef void (^Callback)();
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <MobileCoreServices/UTCoreTypes.h>
-
-static NSString *kBaseURL = @"http://catipedia-server.herokuapp.com";
-//static NSString *kBaseURL = @"http://localhost:5000";
-static NSString *kStorageBaseURL = @"https://s3.amazonaws.com/catipedia.memrise.com/";
-//static NSString *kCatsListURL = @"http://localhost:5000/cats/";
-static NSString *kCatsAddEndPoint = @"/cats/new/";
-static NSString *kBucket = @"catipedia.memrise.com";
-static NSString *kCatWordKey = @"name";
-static NSString *kCatPictureURLKey = @"link";
 
 @interface MRNewCatViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 

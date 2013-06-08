@@ -8,18 +8,13 @@
 
 #import "MRViewController.h"
 
+#import "CatipediaConstants.h"
 #import "MRNewCatViewController.h"
+
 #import <AFNetworking/AFNetworking.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 
-static NSString *kCatsListURL = @"http://catipedia-server.herokuapp.com/cats/";
-//static NSString *kCatsListURL = @"http://localhost:5000/cats/";
-static NSString *kCatsJSONKey = @"entries";
-static NSString *kCatWordKey = @"name";
-static NSString *kCatPictureURLKey = @"link";
-
 static NSString *kPlaceholderImageName = @"placeholder";
-
 static const CGFloat kToastMessageInterval = 1.0;
 
 @interface MRViewController () <UITableViewDataSource, UITableViewDelegate>
