@@ -15,8 +15,10 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 
-static NSString *kServerBaseURL = @"http://catipedia-server.herokuapp.com/";
-static NSString *kCatsListURL = @"";
+static NSString *kCatsListURL = @"http://catipedia-server.herokuapp.com/cats/";
+static NSString *kCatsJSONKey = @"entries";
+static NSString *kCatWordKey = @"name";
+static NSString *kCatPictureURLKey = @"link";
 static NSString *kBucket = @"catipedia.memrise.com";
 
 static const CGFloat kToastMessageInterval = 1.0;
@@ -99,7 +101,7 @@ static const CGFloat kToastMessageInterval = 1.0;
     AFJSONRequestOperation *localVersionOperation = \
     [AFJSONRequestOperation JSONRequestOperationWithRequest:versionRequest
                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                        NSArray *cats = [(NSDictionary *)JSON valueForKey:@"results"];
+                                                        NSArray *cats = [(NSDictionary *)JSON valueForKey:kCatsJSONKey];
                                                         
                                                         NSMutableArray *temp = [NSMutableArray array];
                                                         for (NSDictionary *cat in cats) {
@@ -265,7 +267,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     
-    cell.textLabel.text = @"Cat Word Here";
+    NSDictionary *cat = [self.cats objectAtIndex:indexPath.row];
+    cell.textLabel.text = [cat valueForKey:kCatWordKey];
     
     return cell;
 }
