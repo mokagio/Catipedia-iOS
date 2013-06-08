@@ -16,14 +16,31 @@ typedef void (^Callback)();
 #import <AFAmazonS3Client/AFAmazonS3Client.h>
 #import <AFNetworking/AFNetworking.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <FrameAccessor/FrameAccessor.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 
-@interface MRNewCatViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface MRNewCatViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
+
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UITextField *wordTextField;
+@property (nonatomic, strong) UIButton *doneButton;
+
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSString *imageToUploadPath;
+@property (nonatomic, strong) NSString *word;
+
+- (void)addImageView;
+- (void)addWordTextField;
+- (void)addDoneButton;
 
 - (void)loadImagePicker;
 
 - (void)saveImagetoLibrary:(UIImage *)image;
+
+- (void)startUpload;
+- (void)prepareImageForUpload:(UIImage *)image;
+- (void)askForWord;
 - (void)uploadImage:(UIImage *)image;
 - (void)uploadPictureFromPath:(NSString *)picturePath;
 
@@ -39,6 +56,13 @@ typedef void (^Callback)();
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
+    [self addImageView];
+    [self addWordTextField];
+    [self addDoneButton];
+    
     [self loadImagePicker];
 }
 
@@ -58,6 +82,16 @@ typedef void (^Callback)();
     
     [self presentViewController:cameraUI animated:YES completion:nil];
 }
+
+- (void)askForWord
+{
+    [UIImageView animateWithDuration:0.35 animations:^{
+        self.wordTextField.hidden = NO;
+        self.doneButton.hidden = NO;
+    }];
+}
+
+#pragma mark - 
 
 - (void)dismissWithSuccessState
 {
@@ -93,10 +127,14 @@ typedef void (^Callback)();
                                   [self dismissWithFailAndError:error];
                               } else {
                                   [self removeHUDs];
-                                  [self uploadImage:image];
+                                  [self askForWord];
                               }
                           }];
+}
 
+- (void)startUpload
+{
+    [self uploadImage:self.image];
 }
 
 - (void)uploadImage:(UIImage *)image
@@ -134,7 +172,7 @@ typedef void (^Callback)();
                           } success:^(id responseObject) {
                               
                               NSString *imageLink = [NSString stringWithFormat:@"%@%@", kStorageBaseURL, [picturePath lastPathComponent]];
-                              NSDictionary *params = @{kCatWordKey:@"dummy-name", kCatPictureURLKey:imageLink};
+                              NSDictionary *params = @{kCatWordKey:self.word, kCatPictureURLKey:imageLink};
                               
                               AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURL]];
                               NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
@@ -179,8 +217,56 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
         UIImage *imageToSave = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
         [self saveImagetoLibrary:imageToSave];
+        
+        self.image = imageToSave;
+        self.imageView.image = imageToSave;
     }
 }
 
+#pragma mark - UITextFieldDelegate
+
+// Not sure is the right way but I'm in a hurry cuz I have to see my girlfriend <3
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    self.word = textField.text;
+    NSLog(@"word %@", self.word);
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - UI
+
+- (void)addImageView
+{
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    self.imageView.center = self.view.center;
+    self.imageView.y = self.view.frame.origin.y + 20;
+    [self.view addSubview:self.imageView];
+}
+
+- (void)addWordTextField
+{
+    self.wordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 20, 30)];
+    self.wordTextField.center = self.view.center;
+    self.wordTextField.y = CGRectGetMaxY(self.imageView.frame) + 20;
+    self.wordTextField.placeholder = @"Enter a word for the cat";
+    self.wordTextField.hidden = YES;
+    self.wordTextField.backgroundColor = [UIColor whiteColor];
+    self.wordTextField.textAlignment = NSTextAlignmentCenter;
+    self.wordTextField.delegate = self;
+    [self.view addSubview:self.wordTextField];
+}
+
+- (void)addDoneButton
+{
+    self.doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.doneButton.frame = CGRectMake(0, 0, 160, 80);
+    self.doneButton.center = self.view.center;
+    self.doneButton.y = CGRectGetMaxY(self.wordTextField.frame) + 20;
+    [self.doneButton setTitle:@"Done" forState:UIControlStateNormal];
+    [self.doneButton addTarget:self action:@selector(startUpload)
+              forControlEvents:UIControlEventTouchUpInside];
+    self.doneButton.hidden = YES;
+    [self.view addSubview:self.doneButton];
+}
 
 @end

@@ -2,11 +2,13 @@ PODS:
   - AFAmazonS3Client (0.2.0):
     - AFNetworking (~> 1.0)
   - AFNetworking (1.1.0)
+  - FrameAccessor (1.1.0)
   - MBProgressHUD (0.6)
 
 DEPENDENCIES:
   - AFAmazonS3Client (from `https://github.com/robertjpayne/AFAmazonS3Client.git`)
   - AFNetworking (~> 1.1.0)
+  - FrameAccessor
   - MBProgressHUD (~> 0.6)
 
 EXTERNAL SOURCES:
@@ -16,6 +18,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFAmazonS3Client: 2df1b6ccd3d69f21583ac745cebfe894959ae184
   AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
+  FrameAccessor: 1ef5ba196e0a9e42909d29aeb164f4b58c667cae
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
 
 COCOAPODS: 0.20.2
