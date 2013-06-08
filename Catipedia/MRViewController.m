@@ -16,10 +16,13 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 static NSString *kCatsListURL = @"http://catipedia-server.herokuapp.com/cats/";
+static NSString *kBucket = @"catipedia.memrise.com";
+
 static NSString *kCatsJSONKey = @"entries";
 static NSString *kCatWordKey = @"name";
 static NSString *kCatPictureURLKey = @"link";
-static NSString *kBucket = @"catipedia.memrise.com";
+
+static NSString *kPlaceholderImageName = @"placeholder";
 
 static const CGFloat kToastMessageInterval = 1.0;
 
@@ -226,7 +229,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                       UIImage *resizedImage = [self treatedImage:imageToSave];
                                       
                                       NSData *data = UIImageJPEGRepresentation(resizedImage, 0.25);
-                                      NSString *fileName = [NSString stringWithFormat:@"temp-%f.jpg", [[NSDate date] timeIntervalSince1970]];
+                                      NSString *fileName = [NSString stringWithFormat:@"temp-%f.jpeg", [[NSDate date] timeIntervalSince1970]];
                                       NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                                       NSString *documentsDirectory = [paths objectAtIndex:0];
                                       NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
@@ -269,6 +272,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSDictionary *cat = [self.cats objectAtIndex:indexPath.row];
     cell.textLabel.text = [cat valueForKey:kCatWordKey];
+    
+    NSURL *imageURL = [NSURL URLWithString:[cat valueForKey:kCatPictureURLKey]];
+    [cell.imageView setImageWithURL:imageURL
+                   placeholderImage:[UIImage imageNamed:kPlaceholderImageName]];
     
     return cell;
 }
