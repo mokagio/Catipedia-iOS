@@ -147,7 +147,7 @@ static const CGFloat kToastMessageInterval = 1.0;
     NSString *destinationPath = [NSString stringWithFormat:@"/"];
     [httpClient postObjectWithFile:picturePath
                    destinationPath:destinationPath
-                        parameters:nil
+                        parameters:@{@"Content-Type":@"image/jpeg"}
                           progress:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
                               NSLog(@"%f%% Uploaded", (totalBytesWritten / (totalBytesExpectedToWrite * 1.0f) * 100));
                           } success:^(id responseObject) {
