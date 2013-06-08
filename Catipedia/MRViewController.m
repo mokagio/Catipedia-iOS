@@ -15,7 +15,11 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 
-static NSString *kCatsListURL = @"http://catipedia-server.herokuapp.com/cats/";
+//static NSString *kBaseURL = @"http://catipedia-server.herokuapp.com";
+static NSString *kBaseURL = @"http://localhost:5000";
+//static NSString *kCatsListURL = @"http://catipedia-server.herokuapp.com/cats/";
+static NSString *kCatsListURL = @"http://localhost:5000/cats/";
+static NSString *kCatsAddEndPoint = @"/cats/new/";
 static NSString *kBucket = @"catipedia.memrise.com";
 
 static NSString *kCatsJSONKey = @"entries";
@@ -151,9 +155,27 @@ static const CGFloat kToastMessageInterval = 1.0;
                           progress:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
                               NSLog(@"%f%% Uploaded", (totalBytesWritten / (totalBytesExpectedToWrite * 1.0f) * 100));
                           } success:^(id responseObject) {
-                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                              [self showSuccessToast];
-                              NSLog(@"Upload Complete");
+                              
+                              NSString *imageLink = [picturePath lastPathComponent];
+                              NSDictionary *params = @{@"name":@"dummy-name",@"link":imageLink};
+                              
+                              AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURL]];
+                              NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                                                      path:[NSString stringWithFormat:@"%@%@", kBaseURL, kCatsAddEndPoint]
+                                                                                parameters:params];
+                              AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+                              [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+                              [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                  [self showSuccessToast];
+                                  NSLog(@"Upload Complete");
+                                  [self fetchCats];
+                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                  [self showFailToast];
+                                  NSLog(@"Error: %@", error);
+                              }];
+                              [operation start];
                           } failure:^(NSError *error) {
                               [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                               [self showFailToast];
