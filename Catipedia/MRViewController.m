@@ -12,6 +12,7 @@
 #import "MRNewCatViewController.h"
 
 #import <AFNetworking/AFNetworking.h>
+#import <FrameAccessor/FrameAccessor.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 
 static NSString *kPlaceholderImageName = @"placeholder";
@@ -74,6 +75,7 @@ static const CGFloat kToastMessageInterval = 1.0;
 - (void)addTable
 {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView.origin = CGPointZero;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
