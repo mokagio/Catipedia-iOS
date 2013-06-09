@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3F3DFCB71763434E000691CA /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DFCB61763434E000691CA /* placeholder.png */; };
-		3F3DFCBA17637CA7000691CA /* MRNewCatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DFCB917637CA7000691CA /* MRNewCatViewController.m */; };
-		3F3DFCBD17638DC0000691CA /* CatipediaConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DFCBC17638DC0000691CA /* CatipediaConstants.m */; };
+		3F3DFCC21764EA14000691CA /* CatipediaConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DFCBF1764EA14000691CA /* CatipediaConstants.m */; };
+		3F3DFCC31764EA14000691CA /* MRNewCatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DFCC11764EA14000691CA /* MRNewCatViewController.m */; };
 		3FD2D589175F32B2005A962D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D588175F32B2005A962D /* UIKit.framework */; };
 		3FD2D58B175F32B2005A962D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D58A175F32B2005A962D /* Foundation.framework */; };
 		3FD2D58D175F32B2005A962D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD2D58C175F32B2005A962D /* CoreGraphics.framework */; };
@@ -46,10 +46,10 @@
 
 /* Begin PBXFileReference section */
 		3F3DFCB61763434E000691CA /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
-		3F3DFCB817637CA7000691CA /* MRNewCatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNewCatViewController.h; sourceTree = "<group>"; };
-		3F3DFCB917637CA7000691CA /* MRNewCatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNewCatViewController.m; sourceTree = "<group>"; };
-		3F3DFCBB17638DC0000691CA /* CatipediaConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatipediaConstants.h; sourceTree = "<group>"; };
-		3F3DFCBC17638DC0000691CA /* CatipediaConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatipediaConstants.m; sourceTree = "<group>"; };
+		3F3DFCBE1764EA14000691CA /* CatipediaConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatipediaConstants.h; sourceTree = "<group>"; };
+		3F3DFCBF1764EA14000691CA /* CatipediaConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatipediaConstants.m; sourceTree = "<group>"; };
+		3F3DFCC01764EA14000691CA /* MRNewCatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNewCatViewController.h; sourceTree = "<group>"; };
+		3F3DFCC11764EA14000691CA /* MRNewCatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNewCatViewController.m; sourceTree = "<group>"; };
 		3FD2D585175F32B2005A962D /* Catipedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Catipedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD2D588175F32B2005A962D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3FD2D58A175F32B2005A962D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -114,10 +114,6 @@
 		3FD2D57C175F32B2005A962D = {
 			isa = PBXGroup;
 			children = (
-				3F3DFCBB17638DC0000691CA /* CatipediaConstants.h */,
-				3F3DFCBC17638DC0000691CA /* CatipediaConstants.m */,
-				3F3DFCB817637CA7000691CA /* MRNewCatViewController.h */,
-				3F3DFCB917637CA7000691CA /* MRNewCatViewController.m */,
 				3FD2D58E175F32B2005A962D /* Catipedia */,
 				3FD2D5B2175F32B2005A962D /* CatipediaTests */,
 				3FD2D587175F32B2005A962D /* Frameworks */,
@@ -158,6 +154,10 @@
 				3FD2D598175F32B2005A962D /* MRAppDelegate.m */,
 				3FD2D5A0175F32B2005A962D /* MRViewController.h */,
 				3FD2D5A1175F32B2005A962D /* MRViewController.m */,
+				3F3DFCBE1764EA14000691CA /* CatipediaConstants.h */,
+				3F3DFCBF1764EA14000691CA /* CatipediaConstants.m */,
+				3F3DFCC01764EA14000691CA /* MRNewCatViewController.h */,
+				3F3DFCC11764EA14000691CA /* MRNewCatViewController.m */,
 				3FD2D58F175F32B2005A962D /* Supporting Files */,
 				3FE0ACF6175F9285004E7C0F /* MRCredentialManager.h */,
 				3FE0ACF7175F9285004E7C0F /* MRCredentialManager.m */,
@@ -346,8 +346,8 @@
 				3FD2D599175F32B2005A962D /* MRAppDelegate.m in Sources */,
 				3FD2D5A2175F32B2005A962D /* MRViewController.m in Sources */,
 				3FE0ACF8175F9285004E7C0F /* MRCredentialManager.m in Sources */,
-				3F3DFCBA17637CA7000691CA /* MRNewCatViewController.m in Sources */,
-				3F3DFCBD17638DC0000691CA /* CatipediaConstants.m in Sources */,
+				3F3DFCC21764EA14000691CA /* CatipediaConstants.m in Sources */,
+				3F3DFCC31764EA14000691CA /* MRNewCatViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
