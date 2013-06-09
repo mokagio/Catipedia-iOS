@@ -19,7 +19,6 @@ static const CGFloat kToastMessageInterval = 1.0;
 
 @interface MRViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UIButton *takePictureButton;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) MBProgressHUD *toastMessage;
 @property (nonatomic, strong) NSMutableArray *cats;
@@ -65,17 +64,11 @@ static const CGFloat kToastMessageInterval = 1.0;
 }
 
 - (void)addTakePictureButton
-{
-    self.takePictureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.takePictureButton.frame = CGRectMake(0, 0, 160, 80);
-    CGPoint center = self.view.center;
-    center.y = self.view.frame.size.height - self.takePictureButton.frame.size.height / 2 - 140;
-    self.takePictureButton.center = center;
-    [self.takePictureButton setTitle:@"Take Picture" forState:UIControlStateNormal];
-    [self.takePictureButton addTarget:self
-                               action:@selector(loadTakePictureController)
-                     forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.takePictureButton];
+{   
+    UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                             target:self
+                                                                             action:@selector(loadTakePictureController)];
+    self.navigationItem.rightBarButtonItem = addItem;
 }
 
 - (void)addTable
@@ -91,7 +84,6 @@ static const CGFloat kToastMessageInterval = 1.0;
     MBProgressHUD *loadingHUD = [MBProgressHUD showHUDAddedTo:self.view animated:NO];
     loadingHUD.labelText = @"looking for cats";
     loadingHUD.mode = MBProgressHUDModeIndeterminate;
-    self.takePictureButton.hidden = YES;
     
     NSURL *url = [NSURL URLWithString:kCatsListURL];
     NSURLRequest *versionRequest = [NSURLRequest requestWithURL:url];
@@ -107,12 +99,10 @@ static const CGFloat kToastMessageInterval = 1.0;
                                                         self.cats = temp;
                                                         [self.tableView reloadData];
                                                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                                        self.takePictureButton.hidden = NO;
                                                         
                                                     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                         NSLog(@"JSON failure - %@", error);
                                                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                                        self.takePictureButton.hidden = NO;
                                                     }];
     [localVersionOperation start];
 }
