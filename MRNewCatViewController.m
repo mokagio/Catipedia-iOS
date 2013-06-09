@@ -39,7 +39,6 @@ typedef void (^Callback)();
 - (void)saveImagetoLibrary:(UIImage *)image;
 
 - (void)startUpload;
-- (void)prepareImageForUpload:(UIImage *)image;
 - (void)askForWord;
 - (void)uploadImage:(UIImage *)image;
 - (void)uploadPictureFromPath:(NSString *)picturePath;
@@ -93,6 +92,13 @@ typedef void (^Callback)();
 
 #pragma mark - 
 
+- (void)showUploadingHUD
+{
+    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"Uploading";
+}
+
 - (void)dismissWithSuccessState
 {
     [self removeHUDs];
@@ -134,6 +140,7 @@ typedef void (^Callback)();
 
 - (void)startUpload
 {
+    [self showUploadingHUD];
     [self uploadImage:self.image];
 }
 
